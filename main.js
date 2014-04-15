@@ -33,9 +33,9 @@ var build = function(e, m , d){
 	//determine the extents of the values, for scaling.
 	ex = d3.extent(val_arr, function(d){return +d});
 	var step = Math.ceil(ex[1]-ex[0])/5;   //a "step" that is roughly one fifth of the array
-	dm = d3.range(ex[0], ex[1], step);   //a domain that contains the original extent, plus 3 "steps" to make 5 ranges
+	dm = d3.range(ex[0], ex[1], step);   //a domain that contains the original extent, plus 3 "steps" to make 5 points
 	
-	cScale = d3.scale.linear().range(["blue","green","yellow","pink","red"])  //for these five color
+	cScale = d3.scale.linear().range([180,0])  //for a hue range
 		.domain(dm);
 		
 	
@@ -58,7 +58,8 @@ var build = function(e, m , d){
 				//apply a scaled fill color, or grey if value is null, NaN
 				var val = +data.values[+d.properties.gid];
 				if(!isNaN(val)){
-					return cScale(val) 
+					return d3.hsl(cScale(val),1,0.5)
+					//return cScale(val) 
 				}else{
 					return("grey")
 				}
